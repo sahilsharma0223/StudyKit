@@ -74,8 +74,6 @@ def refineddatat(request,mat):
             for j in lst:
                 if(i.id == j['id']):
                     j['isreported'] = True
-        for i in lst:
-            print(i['isliked'], i['isdisliked'], i['isreported'])
     return lst
 
 

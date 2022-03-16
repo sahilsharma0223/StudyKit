@@ -67,30 +67,45 @@
                         <a  style="color: black;">Like <i class="fa fa-thumbs-o-up"></i> ({{m.like_count}}) </a>
                         <a style="color: black;" >Dislike <i class="fa fa-thumbs-o-down"></i>
                             ({{m.dislike_count}}) </a>
-                        <a style="color: black;">Report <i class="fa fa-comments-o"></i></a>
+                        <a style="color: black;">Report <i class="fa fa-flag-o"></i></a>
 
                         {% elif request.user.is_authenticated %}
                             {% if m.isliked %}
-                            <a style="color: black;" href="{% url 'like' m.id %}">Like <i class="fa fa-thumbs-up"></i> ({{m.like_count}}) </a>
+                            <span class="changelike" >
+                                <a class="cl" style="color: black;cursor: pointer;" data-sid="{{ m.id }}">Like <i class="fa fa-thumbs-up "></i>(<span
+                                        class="lc">{{m.like_count}}</span>)</a>
+                                <a class="cdl" style="color: black;cursor: pointer;" data-sid="{{ m.id }}">Dislike <i class="fa fa-thumbs-o-down "></i>(<span
+                                        class="dc">{{m.dislike_count}}</span>)</a>
+                            </span>
+            
+                            {% elif m.isdisliked %}
+                            <span class="changedislike" data-sid="{{ m.id }}">
+                                <a class="cl" style="color: black;cursor: pointer;" data-sid="{{ m.id }}">Like <i class="fa fa-thumbs-o-up "></i>(<span
+                                        class="lc">{{m.like_count}}</span>)</a>
+                                <a class="cdl" style="color: black;cursor: pointer;" data-sid="{{ m.id }}">Dislike <i class="fa fa-thumbs-down "></i>(<span
+                                        class="dc">{{m.dislike_count}}</span>)</a>
+                            </span>
+                            
                             {% else %}
-                            <a style="color: black;" href="{% url 'like' m.id %}">Like <i class="fa fa-thumbs-o-up"></i> ({{m.like_count}}) </a>
-                            {% endif %}
-                            {% if m.isdisliked %}
-                            <a style="color: black;" href="{% url 'dislike' m.id %}">Dislike <i class="fa fa-thumbs-down"></i>
-                                ({{m.dislike_count}}) </a>
-                            {% else %}
-                            <a style="color: black;" href="{% url 'dislike' m.id %}">Dislike <i class="fa fa-thumbs-o-down"></i> ({{m.dislike_count}}) </a>
+                            <span class="change" >
+                                <a class="cl" style="color: black;cursor: pointer;" data-sid="{{ m.id }}">Like <i class="fa fa-thumbs-o-up "></i>(<span class="lc">{{m.like_count}}</span>)</a>
+                                <a class="cdl" style="color: black;cursor: pointer;" data-sid="{{ m.id }}">Dislike <i class="fa fa-thumbs-o-down " ></i>(<span class="dc">{{m.dislike_count}}</span>)</a>
+                            </span>
                             {% endif %}
                             {% if m.isreported %}
-                            <a style="color: black;" href="{% url 'report' m.id %}">Reported <i class="fa fa-comments"></i></a>
+                            <span class="changereport">
+                                <a class="rp" style="color: black;cursor: pointer;" data-sid="{{ m.id }}" >Reported <i class="fa fa-flag"></i></a>
+                            </span>
                             {% else %}
-                            <a style="color: black;" href="{% url 'report' m.id %}">Report <i class="fa fa-comments-o"></i></a>
+                            <span class="changereport ">
+                            <a class="rp" style="color: black;cursor: pointer;"  data-sid="{{ m.id }}">Report <i class="fa fa-flag-o"></i></a>
+                            </span>
                             {% endif %}
                         {% else %}
-                        <a style="color: black;" href="{% url 'like' m.id %}">Like <i class="fa fa-thumbs-o-up"></i> ({{m.like_count}}) </a>
-                        <a style="color: black;" href="{% url 'dislike' m.id %}">Dislike <i class="fa fa-thumbs-o-down"></i>
+                        <a style="color: black;" href="{% url 'like'  %}">Like <i class="fa fa-thumbs-o-up"></i> ({{m.like_count}}) </a>
+                        <a style="color: black;" href="{% url 'dislike'  %}">Dislike <i class="fa fa-thumbs-o-down"></i>
                                                         ({{m.dislike_count}}) </a>
-                        <a style="color: black;" href="{% url 'report' m.id %}">Report <i class="fa fa-comments-o"></i></a>
+                        <a style="color: black;" href="{% url 'report'  %}">Report <i class="fa fa-flag-o"></i></a>
                         {% endif %}
                         <a href="{% url 'explore' m.id %}"class="btn btn-link btn-block">
                             Download
@@ -104,42 +119,6 @@
         </div>
     </div>
 </div>
-
-
-<!-- <div class="centrecss">
-    <div class="container-fluid">
-        {% for m in mat %}
-        </br>
-        <div class="card" style="max-width: 2000px; max-height:350px;">
-            <div class="row no-gutters" >
-                <div class="col-sm-5" style="background: #868e96;">
-                    {% if m.thumbnail == "" %}
-                        {% if m.type == "document" %}
-                        <img src='{% static "images/document.png" %}' class="card-img-top" alt="{{m.title}}" height="350">
-                        {% elif m.type == "link" %}
-                        <img src='{% static "images/link.png" %}'"static/images/link.png" class="card-img-top" alt="{{m.title}}" height="350">
-                        {% else %}
-                        <img src='{% static "images/video.png" %}'"static/images/video.png" class="card-img-top" alt="{{m.title}}" height="350">
-                        {% endif %}
-                    {% else %}
-                    <img src="/media/{{m.thumbnail}}" class="card-img-top" alt="{{m.title}}" height="350">
-                    {% endif %}
-                </div>
-                <div class="col-sm-7">
-                    <div class="card-body">
-                        <h5 class="card-title">{{m.title}}</h5>
-                        <p class="card-text">{{m.description}}</p>
-                        <a href="{% url 'like' m.id %}" class="btn btn-success">Like <i class="fa fa-thumbs-up"></i> ({{m.like_count}}) </a>
-                        <a href="{% url 'dislike' m.id %}" class="btn btn-primary">Dislike <i class="fa fa-thumbs-down"></i> ({{m.dislike_count}}) </a>
-                        <a href="{% url 'explore' m.id %}" class="btn btn-info">Explore <i class="fa fa-external-link"></i></a>
-                        <a href="{% url 'report' m.id %}" class="btn btn-secondary">Flag <i class="fa fa-flag"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        {% endfor %}
-    </div>
-</div> -->
+{% include 'ajax.html' %}
 
 {% endblock %}

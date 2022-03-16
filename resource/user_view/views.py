@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from numpy import issubsctype
 
@@ -119,55 +120,69 @@ def searching(request):
     
     return render(request, 'home.html', {'mat': material})
 
-def like(request,id):
+def like(request):
     if request.user.is_authenticated==False:
-        return redirect('/login/')
+        return redirect('/login/')  
+    id=request.GET['id']
+    val=0
     material=Material.objects.get(id=id)
     member=Member.objects.get(usn=request.user.username)
     if material in member.likes.all():
         member.likes.remove(material)
         material.like_count -= 1
+        val=1
     elif material in member.dislikes.all():
         member.dislikes.remove(material)
         member.likes.add(material)
         material.like_count += 1
         material.dislike_count -= 1
+        val=2
     else:
         member.likes.add(material)
         material.like_count += 1
+        val=3
     material.save()
-    return redirect('/')
+    return JsonResponse({'status':val})
 
-def dislike(request,id):
+def dislike(request):
     if request.user.is_authenticated==False:
         return redirect('/login/')
+    id = request.GET['id']
+    val = 0
     material = Material.objects.get(id=id)
     member = Member.objects.get(usn=request.user.username)
     if material in member.dislikes.all():
         member.dislikes.remove(material)
         material.dislike_count -= 1
+        val = 1
     elif material in member.likes.all():
         member.likes.remove(material)
         member.dislikes.add(material)
         material.like_count -= 1
         material.dislike_count += 1
+        val = 2
     else:
         member.dislikes.add(material)
         material.dislike_count += 1
+        val=3
     material.save()
-    return redirect('/')
+    return JsonResponse({'status': val})
 
-def report(request,id):
+def report(request):
     if request.user.is_authenticated==False:
         return redirect('/login/')
+    id=request.GET['id']
     material = Material.objects.get(id=id)
     member = Member.objects.get(usn=request.user.username)
+    val=0
     if material in member.report.all():
         member.report.remove(material)
+        val=1
     else:
         member.report.add(material)
+        val=2
     material.save()
-    return redirect('/')
+    return JsonResponse({'status':val})
 
 
 def filter(request):

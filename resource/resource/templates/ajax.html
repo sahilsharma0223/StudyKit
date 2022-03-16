@@ -1,0 +1,255 @@
+<script>
+    $(".changelike").on("click",".cl",function(){
+        let id = $(this).attr("data-sid");
+        let likecount = $(this).children(".lc").text();
+        let dislikecount = $(this).siblings(".cdl").children(".dc").text();
+        likecount = parseInt(likecount);
+        dislikecount = parseInt(dislikecount);
+        mydata = {
+            "id": id,
+        }
+        mythis = this;
+        $.ajax('/like', {
+            data: mydata,
+            success: function (data) {
+                console.log(data);
+                if (data.status == 1) {
+                    likecount = likecount - 1;
+                    console.log(likecount);
+                    $(mythis).html("Like <i class='fa fa-thumbs-o-up''></i>(<span class='lc'>" + (likecount) + "</span>)");
+                }
+                else if (data.status == 2) {
+                    likecount = likecount + 1;
+                    dislikecount = dislikecount - 1;
+                    $(mythis).html("Like <i class='fa fa-thumbs-up''></i> (<span class='lc'>" + (likecount) + "</span>)</a>");
+                    $(mythis).siblings(".cdl").html("Dislike <i class='fa fa-thumbs-o-down''></i> (<span class='dc'>" + (dislikecount) + "</span>)</a>");
+                }
+                else {
+                    console.log("inside", likecount);
+                    likecount = likecount + 1
+                    $(mythis).html("Like <i class='fa fa-thumbs-up''></i>(<span class='lc'>" + (likecount) + "</span>)");
+
+                }
+
+            },
+        });
+    });
+
+    $(".changelike").on("click", ".cdl", function () {
+        console.log("dislike");
+        let id = $(this).attr("data-sid");
+        let dislikecount = $(this).children(".dc").text();
+        let likecount = $(this).siblings(".cl").children(".lc").text();
+        likecount = parseInt(likecount);
+        dislikecount = parseInt(dislikecount);
+        console.log(likecount);
+        console.log(dislikecount);
+        mydata = {
+            "id": id,
+        }
+        mythis = this;
+        $.ajax('/dislike', {
+            data: mydata,
+            success: function (data) {
+                console.log(data);
+                if (data.status == 1) {
+                    console.log("already disliked");
+                    dislikecount = dislikecount - 1;
+                    $(mythis).html("Dislike <i class='fa fa-thumbs-o-down''></i> (<span class='dc'>" + (dislikecount) + "</span>)</a>");
+                }
+                else if (data.status == 2) {
+                    console.log("already liked");
+                    likecount = likecount - 1;
+                    dislikecount = dislikecount + 1;
+                    $(mythis).siblings(".cl").html("Like <i class='fa fa-thumbs-o-up''></i> (<span class='lc'>" + (likecount) + "</span>)</a>");
+                    $(mythis).html("Dislike <i class='fa fa-thumbs-down''></i> (<span class='dc'>" + (dislikecount) + "</span>)</a>");
+                }
+                else {
+                    console.log("inside", likecount);
+                    dislikecount = dislikecount + 1
+                    $(mythis).html("Dislike <i class='fa fa-thumbs-down''></i> (<span class='dc'>" + (dislikecount) + "</span>)</a>");
+
+                }
+            },
+        });
+    });
+
+    $(".changedislike").on("click",".cl",function(){
+        let id = $(this).attr("data-sid");
+        let likecount = $(this).children(".lc").text();
+        let dislikecount = $(this).siblings(".cdl").children(".dc").text();
+        likecount = parseInt(likecount);
+        dislikecount = parseInt(dislikecount);
+        mydata = {
+            "id": id,
+        }
+        mythis = this;
+        $.ajax('/like', {
+            data: mydata,
+            success: function (data) {
+                console.log(data);
+                if (data.status == 1) {
+                    likecount = likecount - 1;
+                    console.log(likecount);
+                    $(mythis).html("Like <i class='fa fa-thumbs-o-up''></i>(<span class='lc'>" + (likecount) + "</span>)");
+                }
+                else if (data.status == 2) {
+                    likecount = likecount + 1;
+                    dislikecount = dislikecount - 1;
+                    $(mythis).html("Like <i class='fa fa-thumbs-up''></i> (<span class='lc'>" + (likecount) + "</span>)</a>");
+                    $(mythis).siblings(".cdl").html("Dislike <i class='fa fa-thumbs-o-down''></i> (<span class='dc'>" + (dislikecount) + "</span>)</a>");
+                }
+                else {
+                    console.log("inside", likecount);
+                    likecount = likecount + 1
+                    $(mythis).html("Like <i class='fa fa-thumbs-up''></i>(<span class='lc'>" + (likecount) + "</span>)");
+
+                }
+
+            },
+        });
+    });
+
+    $(".changedislike").on("click", ".cdl", function () {
+            console.log("dislike");
+        let id = $(this).attr("data-sid");
+        let dislikecount = $(this).children(".dc").text();
+        let likecount = $(this).siblings(".cl").children(".lc").text();
+        likecount = parseInt(likecount);
+        dislikecount = parseInt(dislikecount);
+        console.log(likecount);
+        console.log(dislikecount);
+        mydata = {
+            "id": id,
+        }
+        mythis = this;
+        $.ajax('/dislike', {
+            data: mydata,
+            success: function (data) {
+                console.log(data);
+                if (data.status == 1) {
+                    console.log("already disliked");
+                    dislikecount = dislikecount - 1;
+                    $(mythis).html("Dislike <i class='fa fa-thumbs-o-down''></i> (<span class='dc'>" + (dislikecount) + "</span>)</a>");
+                }
+                else if (data.status == 2) {
+                    console.log("already liked");
+                    likecount = likecount - 1;
+                    dislikecount = dislikecount + 1;
+                    $(mythis).siblings(".cl").html("Like <i class='fa fa-thumbs-o-up''></i> (<span class='lc'>" + (likecount) + "</span>)</a>");
+                    $(mythis).html("Dislike <i class='fa fa-thumbs-down''></i> (<span class='dc'>" + (dislikecount) + "</span>)</a>");
+                }
+                else {
+                    console.log("inside", likecount);
+                    dislikecount = dislikecount + 1
+                    $(mythis).html("Dislike <i class='fa fa-thumbs-down''></i> (<span class='dc'>" + (dislikecount) + "</span>)</a>");
+
+                }
+            },
+        });
+    });
+
+   
+
+    $(".change").on("click",".cl",function(){
+        
+        let id = $(this).attr("data-sid");
+        let likecount = $(this).children(".lc").text();
+        let dislikecount= $(this).siblings(".cdl").children(".dc").text();
+        likecount=parseInt(likecount);
+        dislikecount=parseInt(dislikecount);
+        mydata={
+            "id":id,
+        }
+        mythis=this;
+        $.ajax('/like',{
+            data:mydata,
+            success:function(data){
+                console.log(data);
+                if(data.status==1)
+                {
+                    likecount=likecount-1;
+                    console.log(likecount);
+                    $(mythis).html("Like <i class='fa fa-thumbs-o-up''></i>(<span class='lc'>"+(likecount)+"</span>)");
+                }
+                else if(data.status==2)
+                {
+                    likecount=likecount+1;
+                    dislikecount=dislikecount-1;
+                    $(mythis).html("Like <i class='fa fa-thumbs-up''></i> (<span class='lc'>"+(likecount)+"</span>)</a>");
+                    $(mythis).siblings(".cdl").html("Dislike <i class='fa fa-thumbs-o-down''></i> (<span class='dc'>"+(dislikecount)+"</span>)</a>");
+                }
+                else
+                {
+                    console.log("inside",likecount);
+                    likecount=likecount+1
+                    $(mythis).html("Like <i class='fa fa-thumbs-up''></i>(<span class='lc'>"+(likecount)+"</span>)");
+                    
+                }
+                
+            },
+        });
+    });
+
+    $(".change").on("click", ".cdl", function () {
+            console.log("dislike");
+            let id = $(this).attr("data-sid");
+            let dislikecount = $(this).children(".dc").text();
+            let likecount = $(this).siblings(".cl").children(".lc").text();
+            likecount = parseInt(likecount);
+            dislikecount = parseInt(dislikecount);
+            console.log(likecount);
+            console.log(dislikecount);
+            mydata = {
+                "id": id,
+            }
+            mythis = this;
+            $.ajax('/dislike', {
+                data: mydata,
+                success: function (data) {
+                    console.log(data);
+                    if (data.status == 1) {
+                        console.log("already disliked");
+                        dislikecount = dislikecount - 1;
+                        $(mythis).html("Dislike <i class='fa fa-thumbs-o-down''></i> (<span class='dc'>"+(dislikecount)+"</span>)</a>");
+                    }
+                    else if (data.status == 2) {
+                        console.log("already liked");
+                        likecount = likecount - 1;
+                        dislikecount = dislikecount + 1;
+                        $(mythis).siblings(".cl").html("Like <i class='fa fa-thumbs-o-up''></i> (<span class='lc'>" + (likecount) + "</span>)</a>");
+                        $(mythis).html("Dislike <i class='fa fa-thumbs-down''></i> (<span class='dc'>" + (dislikecount) + "</span>)</a>");
+                    }
+                    else {
+                        console.log("inside", likecount);
+                        dislikecount = dislikecount + 1
+                        $(mythis).html("Dislike <i class='fa fa-thumbs-down''></i> (<span class='dc'>" + (dislikecount) + "</span>)</a>");
+
+                    }
+                },
+            });
+        });
+
+        $(".changereport").on("click",".rp",function(){
+            let id = $(this).attr("data-sid");
+            mydata={
+                "id":id,
+            }
+            mythis=this;
+            $.ajax('/report',{
+                data:mydata,
+                success:function(data){
+                    console.log(data);
+                    if(data.status==1)
+                    {
+                        $(mythis).html("Report <i class='fa fa-flag-o'></i>");
+                    }
+                    else
+                    {
+                        $(mythis).html("Reported <i class='fa fa-flag'></i>");
+                    }            
+                },
+            });
+        });
+
+</script>
