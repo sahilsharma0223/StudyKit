@@ -32,13 +32,13 @@
         </tbody>
     </table>
     <div class="pagination">
-        <span class="step-links">
+        <span style="margin-left: 20px;margin-bottom: 20px;" class="step-links">
             {% if issues.has_previous %}
             <a class="btn btn-danger" href="?page=1">&laquo; first</a>
             <a class="btn btn-primary" href="?page={{ issues.previous_page_number }}">previous</a>
             {% endif %}
     
-            <h5 class="current">
+            <h5 style="margin-left: 20px;" class="current">
                 Page {{ issues.number }} of {{ issues.paginator.num_pages }}.
             </h5>
     

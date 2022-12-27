@@ -6,14 +6,14 @@ from material.models import Material
 
 def adminissue(request):
     issue = issues.objects.all()
-    paginator = Paginator(issue, 10)
+    paginator = Paginator(issue, 5)
     page = request.GET.get('page')
     issue = paginator.get_page(page)
     return render(request, 'address.html', {'issues': issue})
     
 def adminflag(request):
     material = Member.objects.raw('SELECT * FROM member A, material B, member_report C WHERE A.usn = C.member_id AND C.material_id = B.id')
-    paginator = Paginator(material, 10)
+    paginator = Paginator(material, 5)
     page = request.GET.get('page')
     material = paginator.get_page(page)
     return render(request, 'flags.html', {'issues': material})

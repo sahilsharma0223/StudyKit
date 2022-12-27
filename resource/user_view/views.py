@@ -50,7 +50,7 @@ def issuestatus(request):
     if request.user.is_authenticated==False:
         return redirect('/login/')
     issue = issues.objects.filter(usn=request.user.username)
-    paginator = Paginator(issue, 1)
+    paginator = Paginator(issue, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'issuestatus.html', {'issues': page_obj})
